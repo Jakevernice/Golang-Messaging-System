@@ -1,0 +1,14 @@
+[build]
+cmd = "go run ./cmd"
+bin = "tmp/main"         # Air builds a binary here temporarily
+include_ext = ["go", "tpl", "tmpl", "html"]
+exclude_dir = ["db", "migrations", "docs", "tmp"]
+delay = 1000             # Wait 1s after file changes before rebuild
+log = "air.log"
+
+[color]
+main = "yellow"
+watcher = "cyan"
+build = "green"
+runner = "magenta"
+
