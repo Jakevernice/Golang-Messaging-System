@@ -5,6 +5,7 @@ import (
 	"os"
 
 	"messaging-system/internal/api"
+	"messaging-system/internal/auth"
 	"messaging-system/pkg/db"
 
 	"github.com/gin-gonic/gin"
@@ -21,6 +22,10 @@ func main() {
 	// Initialize database connection
 	db.Initialize()
 	defer db.Close()
+
+	// Initialize token blacklist (will clean up every hour)
+	_ = auth.GetTokenBlacklist()
+	log.Println("Token blacklist initialized")
 
 	// Setup Gin router
 	router := gin.Default()

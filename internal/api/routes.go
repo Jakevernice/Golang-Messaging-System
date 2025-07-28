@@ -1,6 +1,8 @@
 package api
 
 import (
+	"messaging-system/internal/middleware"
+
 	"github.com/gin-gonic/gin"
 )
 
@@ -12,5 +14,13 @@ func SetupRoutes(router *gin.Engine) {
 		public.POST("/register", RegisterHandler)
 		public.POST("/login", LoginHandler)
 		public.POST("/logout", LogoutHandler)
+		public.POST("/refresh", RefreshTokenHandler)
+	}
+
+	// Protected routes
+	protected := router.Group("/api")
+	protected.Use(middleware.JWTAuthMiddleware())
+	{
+		protected.GET("/me", MeHandler)
 	}
 }
