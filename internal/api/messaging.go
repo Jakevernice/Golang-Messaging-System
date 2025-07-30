@@ -199,7 +199,7 @@ func GetMessagesHandler(c *gin.Context) {
 		       SELECT group_id FROM group_members WHERE member_id = $1
 		   ))
 		ORDER BY m.created_at DESC
-		LIMIT 100`
+		LIMIT 10`
 
 	rows, err := db.GetDB().Query(query, int(userIDInt))
 	if err != nil {
@@ -256,7 +256,7 @@ func GetConversationHandler(c *gin.Context) {
 		    (m.sender_id = $2 AND m.receiver_id = $1)
 		)
 		ORDER BY m.created_at ASC
-		LIMIT 100`
+		LIMIT 10`
 
 	rows, err := db.GetDB().Query(query, int(userIDInt), otherUserID)
 	if err != nil {
@@ -323,8 +323,8 @@ func GetGroupMessagesHandler(c *gin.Context) {
 		SELECT m.id, m.sender_id, m.receiver_id, m.group_id, m.content, m.created_at
 		FROM messages m
 		WHERE m.group_id = $1
-		ORDER BY m.created_at ASC
-		LIMIT 100`
+		ORDER BY m.created_at DESC
+		LIMIT 10`
 
 	rows, err := db.GetDB().Query(query, groupID)
 	if err != nil {

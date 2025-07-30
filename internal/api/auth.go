@@ -38,13 +38,13 @@ func getEnvDuration(key string, defaultDuration time.Duration) time.Duration {
 		return defaultDuration
 	}
 
-	// Try to parse as integer seconds
+	// if env set in integer as seconds
 	valueInt, err := strconv.ParseInt(valueStr, 10, 64)
 	if err == nil {
 		return time.Duration(valueInt) * time.Second
 	}
 
-	// Try to parse as duration string
+	// if env set in string as duration (eg. "15m", "1h", etc.)
 	valueDuration, err := time.ParseDuration(valueStr)
 	if err == nil {
 		return valueDuration
